@@ -1,4 +1,4 @@
-const redux = require('redux');  // import redux with node.js
+const redux = require("redux"); // import redux with node.js
 
 /**
  * initialize the reducer function
@@ -8,9 +8,19 @@ const redux = require('redux');  // import redux with node.js
  */
 
 const counterReducer = (state = { counter: 0 }, action) => {
+  if (action.type === "increment") {
     return {
-        counter: state.counter + 1
+      counter: state.counter + 1,
     };
+  }
+
+  if (action.type === 'decrement') {
+    return {
+        counter: state.counter - 1,
+    }
+  }
+
+  return state;
 };
 
 // call the createStore method in redux package
@@ -21,10 +31,12 @@ const store = redux.createStore(counterReducer);
 
 // the subscriber function to 'store'
 const counterSubscriber = () => {
-    const latestState = store.getState(); // getState method provided by redux.createStore
-    console.log(latestState);  // logs the latest state snapshot
+  const latestState = store.getState(); // getState method provided by redux.createStore
+  console.log(latestState); // logs the latest state snapshot
 };
 
-store.subscribe(counterSubscriber);  // whenever store state changes call the counterSubscriber function
+store.subscribe(counterSubscriber); // whenever store state changes call the counterSubscriber function
 
-store.dispatch({ type: 'increment' });  // dispatch an action on the store object
+store.dispatch({ type: "increment" }); // dispatch an action on the store object
+
+store.dispatch({ type: 'decrement' }); // dispatch an action on the store object
